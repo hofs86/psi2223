@@ -167,6 +167,32 @@ void pesquisar_registo(string nome)
     }
 }
 
+void pesquisar_registo_alternativa(string nome)
+{
+    Aluno *aux, *registo = NULL;
+    int pos = 1;
+
+    if (inicio)
+    {
+        aux = inicio;
+
+        while (aux->seguinte != NULL && aux->nome != nome)
+        {
+            aux = aux->seguinte;
+            pos++;
+        }
+
+        if(aux)
+            cout << "Elemento " << pos << ": " << aux->nome << "\t" << aux->nota << endl;
+        else
+            cout << "Não encontrei!\n";
+    }
+    else
+    {
+        cout << "\n\tLista vazia!\n\n";
+    }
+}
+
 int menu()
 {
     int escolha;
@@ -223,7 +249,7 @@ int main()
                 cout << "Digite o nome a pesquisar: ";
                 cin.ignore();
                 getline(cin, nome);
-                pesquisar_registo(nome);
+                pesquisar_registo_alternativa(nome);
             }
             break;
 
