@@ -3,12 +3,6 @@
 #include <locale>
 using namespace std;
 
-// struct Aluno
-// {
-//     string nome;
-//     float nota;
-// };
-
 struct Aluno
 {
     string nome;
