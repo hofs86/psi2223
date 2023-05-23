@@ -98,32 +98,25 @@ void eliminar_registo(string nome)
     if (inicio)
     {
         aux = inicio;
-        if (aux->nome == nome)
-        {
+        if (aux->nome == nome) {
             // se o primeiro nó tiver o registo a eliminar
             remover = inicio;
             inicio = aux->seguinte;// mudar o ponteiro do inicio para o elemento seguinte
-        }
-        else
-        {
+        } else {
             // enquanto nao encontrar o nome percorre a lista
-            while (aux->seguinte && aux->seguinte->nome != nome)
-            {
+            while (aux->seguinte && aux->seguinte->nome != nome) {
                 aux = aux->seguinte;
             }
             // se chegamos ao final da lista e o proximo elemento nao é nulo
             // significa que encontramos o nome e podemos eliminar.
-            if (aux->seguinte)
-            {
+            if (aux->seguinte) {
                 remover = aux->seguinte;
                 aux->seguinte = remover->seguinte;
             }
         }
 
         delete remover;
-    }
-    else
-    {
+    } else {
         cout << "\n\tLista vazia!\n\n";
     }
 }
@@ -176,13 +169,13 @@ void pesquisar_registo_alternativa(string nome)
     {
         aux = inicio;
 
-        while (aux->seguinte != NULL && aux->nome != nome)
+        while (aux && aux->nome != nome)
         {
             aux = aux->seguinte;
             pos++;
         }
 
-        if(aux)
+        if (aux)
             cout << "Elemento " << pos << ": " << aux->nome << "\t" << aux->nota << endl;
         else
             cout << "Não encontrei!\n";
@@ -249,7 +242,8 @@ int main()
                 cout << "Digite o nome a pesquisar: ";
                 cin.ignore();
                 getline(cin, nome);
-                pesquisar_registo_alternativa(nome);
+                //pesquisar_registo(nome);              // pesquisa similar ao remover
+                pesquisar_registo_alternativa(nome);    // pesquisa mais simples
             }
             break;
 
