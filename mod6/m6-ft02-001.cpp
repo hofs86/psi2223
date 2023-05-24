@@ -7,71 +7,76 @@ struct Aluno
 {
     string nome;
     float nota;
-    Aluno *seguinte;
 };
 
-Aluno *inicio = NULL;
+struct Node
+{
+    Aluno al;
+    Node *px;
+};
+
+Node *inicio = NULL;
 
 // Insere um elemento no final da lista
 void inserir_fim_lista()
 {
-    Aluno *novoAluno, *aux;
+    Node *p, *aux;
 
     // criar novo no
-    novoAluno = new Aluno;
+    p = new Node;
     cout << "Digite o nome: ";
     cin.ignore();
-    getline(cin, novoAluno->nome);
+    getline(cin, p->al.nome);
     cout << "Digite a nota: ";
-    cin >> novoAluno->nota;
-    novoAluno->seguinte = NULL;
+    cin >> p->al.nota;
+    p->px = NULL;
 
     if (inicio == NULL)
     {
         // lista vazia
-        inicio = novoAluno;
+        inicio = p;
     }
     else
     {
         aux = inicio;
 
-        while (aux->seguinte != NULL)
+        while (aux->px != NULL)
         {
-            aux = aux->seguinte;
+            aux = aux->px;
         }
-        aux->seguinte = novoAluno;
+        aux->px = p;
     }
 }
 
 // insere um elemento no inicio da lista
 void inserir_inicio_lista()
 {
-    Aluno *novoAluno;
+    Node *p;
 
     // criar novo no
-    novoAluno = new Aluno;
+    p = new Node;
     cout << "Digite o nome: ";
     cin.ignore();
-    getline(cin, novoAluno->nome);
+    getline(cin, p->al.nome);
     cout << "Digite a nota: ";
-    cin >> novoAluno->nota;
+    cin >> p->al.nota;
 
     if (inicio == NULL)
     {
         // lista vazia
-        inicio = novoAluno;
-        novoAluno->seguinte = NULL;
+        inicio = p;
+        p->px = NULL;
     }
     else
     {
-        novoAluno->seguinte = inicio;
-        inicio = novoAluno;
+        p->px = inicio;
+        inicio = p;
     }
 }
 
 void mostrar_lista()
 {
-    Aluno *aux;
+    Node *aux;
 
     // imprimir valores da lista
     if (inicio)
@@ -80,8 +85,8 @@ void mostrar_lista()
         int i = 1;
         do
         {
-            cout << "Elemento " << i << ": " << aux->nome << "\t" << aux->nota << endl;
-            aux = aux->seguinte;
+            cout << "Elemento " << i << ": " << aux->al.nome << "\t" << aux->al.nota << endl;
+            aux = aux->px;
             i++;
         } while (aux != NULL);
     }
@@ -93,30 +98,30 @@ void mostrar_lista()
 
 void eliminar_registo(string nome)
 {
-    Aluno *aux, *remover = NULL;
+    Node *aux, *remover = NULL;
 
     if (inicio)
     {
         aux = inicio;
-        if (aux->nome == nome)
+        if (aux->al.nome == nome)
         {
             // se o primeiro nó tiver o registo a eliminar
             remover = inicio;
-            inicio = aux->seguinte;// mudar o ponteiro do inicio para o elemento seguinte
+            inicio = aux->px; // mudar o ponteiro do inicio para o elemento seguinte
         }
         else
         {
             // enquanto nao encontrar o nome percorre a lista
-            while (aux->seguinte && aux->seguinte->nome != nome)
+            while (aux->px && aux->px->al.nome != nome)
             {
-                aux = aux->seguinte;
+                aux = aux->px;
             }
             // se chegamos ao final da lista e o proximo elemento nao é nulo
             // significa que encontramos o nome e podemos eliminar.
-            if (aux->seguinte)
+            if (aux->px)
             {
-                remover = aux->seguinte;
-                aux->seguinte = remover->seguinte;
+                remover = aux->px;
+                aux->px = remover->px; // mudar o ponteiro do anterior para o proximo
             }
         }
 
@@ -130,13 +135,13 @@ void eliminar_registo(string nome)
 
 void pesquisar_registo(string nome)
 {
-    Aluno *aux, *registo = NULL;
+    Node *aux, *registo = NULL;
     int pos = 1;
 
     if (inicio)
     {
         aux = inicio;
-        if (aux->nome == nome)
+        if (aux->al.nome == nome)
         {
             // se o primeiro nó tiver o registo a pesquisar
             registo = inicio;
@@ -144,20 +149,20 @@ void pesquisar_registo(string nome)
         else
         {
             // enquanto nao encontrar o nome percorre a lista
-            while (aux->seguinte && aux->seguinte->nome != nome)
+            while (aux->px && aux->px->al.nome != nome)
             {
-                aux = aux->seguinte;
+                aux = aux->px;
                 pos++;
             }
             // se chegamos ao final da lista e o proximo elemento nao é nulo
             // significa que encontramos o nome.
-            if (aux->seguinte)
+            if (aux->px)
             {
-                registo = aux->seguinte;
+                registo = aux->px;
             }
         }
         if(registo)
-            cout << "Elemento " << pos << ": " << registo->nome << "\t" << registo->nota << endl;
+            cout << "Elemento " << pos << ": " << registo->al.nome << "\t" << registo->al.nota << endl;
         else
             cout << "Não encontrei!\n";
     }
