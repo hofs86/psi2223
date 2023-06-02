@@ -5,7 +5,13 @@
 using namespace std;
 int main()
 {
-    ifstream ficheiro("pessoas.txt");
+    // abrir ficheiro
+    ifstream ficheiro("pessoas.txt", ios::in);
+
+    // abrir ficheiro (é igual à linha anterior)
+    ifstream ficheiro;
+    ficheiro.open("pessoas.txt", ios::in);
+
     string linhaLida;
 
     while (getline(ficheiro, linhaLida))
